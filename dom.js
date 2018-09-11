@@ -12,6 +12,18 @@ const $ = function (sel) {
         nodeList[i].classList.toggle(className);
       }
     }
+
+    const addClass = function (className) {
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.add(className);
+      }
+    }
+
+    const removeClass = function (className) {
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.remove(className);
+      }
+    }
   
     const on = function (action, cb) {
       for (let i = 0; i < nodeList.length; i++) {
@@ -32,30 +44,16 @@ const $ = function (sel) {
             nodeList[i].innerHTML = content;
           }    
     }
-    //part2
     const append = function(content) {
       for (let i = 0; i < nodeList.length; i++) {
           nodeList[i].innerHTML += content;
       }
     }
-    //part5
     const empty = function () {
       for (let i = 0; i < nodeList.length; i++) {
         nodeList[i].innerHTML = '';      
     }
   }
-
-    const show = function () {
-      for (let i = 0; i < nodeList.length; i++) {
-        nodeList[0].style.display = 'block';
-    }      
-  }
-
-    const hide = function () {
-      for (let i = 0; i < nodeList.length; i++) {
-        nodeList[i].style.display = 'none';    
-  }
-}
   
     const publicAPI = {
       nodeList: nodeList,
@@ -66,12 +64,10 @@ const $ = function (sel) {
       html: html,
       append: append,
       empty: empty,
-      show: show,
-      hide: hide
+      addClass: addClass,
+      removeClass: removeClass
     }
   
     return publicAPI;
-  
-  
-  
+
   }

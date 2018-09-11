@@ -24,50 +24,43 @@
   <div id="main">
     
     <section id='inputFields'>
-        <div id="empName">
-        <input id='inputName' placeholder="Enter Employee Name" />
-      </div>
-        <div id="empAddUpdate" class="mainSection">
-            <input id='inputName' placeholder="Enter Employee Name" />
-            <input id='officeNum' placeholder="Enter Office Number" />
-            <input id='phoneNum' placeholder="Enter Phone Number" />
+        <div id="empName" class="mainSection hide">
+        Name:<input id='inputName' placeholder="Enter Employee Name" />      
+        </div>
+        <div id="empAddUpdate" class="mainSection hide">
+            Number:<input id='officeNum' placeholder="Enter Office Number" /><br />
+            Phone:<input id='phoneNum' placeholder="Enter Phone Number" />
         </div>
     </section>
 
-    <section id='contentVerify' class='mainSection'>      
+    <section id='contentVerify' class='mainSection hide'>      
       <button id="btnVerify">Verify</button>
-      <hr />
     </section>
 
-    <section id='contentLookup' class='mainSection'>
-        <input id='inputName1' placeholder="Enter Employee Name" />
+    <section id='contentLookup' class='mainSection hide'>
       <button id="btnLookup">Lookup</button>
     </section>
 
-    <section id='contentContains' class='mainSection'>
+    <section id='contentContains' class='mainSection hide'>
       <button id="btnContains">Contains</button>
     </section>
 
-    <section id='contentUpdate' class='mainSection'>
+    <section id='contentUpdate' class='mainSection hide'>
       <button id="btnUpdate">Update</button>
     </section>
 
-    <section id='contentAdd' class='mainSection'>
+    <section id='contentAdd' class='mainSection hide'>
       <button id="btnAdd">Add</button>
     </section>
 
-    <section id='contentDelete' class='mainSection'>
+    <section id='contentDelete' class='mainSection hide'>
       <button id="btnDelete">Delete</button>
     </section>
-
+    <br />
     <section id="resultBoard">
     </section>
 
-    <!--<section id='content'>
- 
-    </section>>-->
   </div>
-  <!--<script src="render.js"></script> -->
   <script src="dom.js"></script>
   <script src="app.js"></script>
   

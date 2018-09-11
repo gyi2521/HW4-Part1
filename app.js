@@ -1,8 +1,8 @@
 const employeeList = [
   {
     name: 'Jan',
-    officeNum: '#1',
-    phoneNum: '(222) 222-2222'   
+    officeNum: 1,
+    phoneNum: '222 222-2222'
   },
   {
     name: 'Juan',
@@ -41,137 +41,153 @@ const employeeList = [
   }
 ];
 
-let resultList = [];
+const render = function (html) {
+  html = '<hr />' + html;
+  $('#resultBoard').html(html);
+}
 
-//const userCommand = prompt("Enter you command:");
-
-const render = function (arrResult) {
-   $('#resultBoard').empty();
-   // if (arrResult.length !== 0) {
-     console.log(arrResult);
-       for (let i = 0; i < arrResult.length; i++) {
-           $('#resultBoard').append(`<div>${arrResult[i]}</div>`);
-       }
-   // }else{
-   //     for (let i = 0; i < employeeList.length; i++) {
-   //         $('#resultBoard').append(`<div>${employeeList[i]}</div>`);
-   //     }
-   // }
-   
- }
- 
-
-const print = function () {    
-  for (let i = 0; i < employeeList.length; i++) {
-    //render(employeeList[i].name, employeeList[i].officeNum, employeeList[i].phoneNum);
-    resultList.push(employeeList[i].name,employeeList[i].officeNum,employeeList[i].phoneNum,'<br/>');   
+//created additional render function to eliminate repetition 
+const renderEmployee = function (arrResult) {
+  let html = '<hr />';
+  for (let i = 0; i < arrResult.length; i++) {
+    html += `<div><p>${arrResult[i].name}</p><p>${arrResult[i].officeNum}</p><p>${arrResult[i].phoneNum}</p></div><br />`;
   }
-  render(resultList);
+  $('#resultBoard').html(html);
+}
+
+const print = function () {
+  renderEmployee(employeeList);
 }
 
 const verify = function () {
-  
+
   const empName = $('#inputName').val();
   let verify = 'Employee Not Found'
-  for(let i=0; i < employeeList.length; i++){
-    if (empName === employeeList[i].name){
-        verify = 'Employee Found';
-        break;
-     }     
-   }
-   render(verify);
+  for (let i = 0; i < employeeList.length; i++) {
+    if (empName.toLowerCase() === employeeList[i].name.toLowerCase()) {
+      verify = 'Employee Found';
+      break;
+    }
+  }
+  render(verify);
 }
 
 const lookup = function () {
-  event.preventDefault();
-  const empName = $('#inputName1').val();
-  for (let i=0; i < employeeList.length; i++) {
-    if (empName === employeeList[i].name){
-      resultList.push(empName);
+  let resultList = [];
+  const empName = $('#inputName').val();
+  for (let i = 0; i < employeeList.length; i++) {
+    if (empName.toLowerCase() === employeeList[i].name.toLowerCase()) {
+      resultList.push(employeeList[i]);
       break;
-    }   
+    }
   }
-  render(resultList);
-} 
+  if (resultList.length > 0) {
+    renderEmployee(resultList);
+  } else {
+    render('Employee Not Found');
+  }
+}
 const contains = function () {
-  // const inputString = prompt('Please enter a string: ');
+  let resultList = [];
+  const inputString = $('#inputName').val();
   for (let i = 0; i < employeeList.length; i++) {
-      if (employeeList[i].name.includes(inputString)){
-      render(employeeList[i].name, employeeList[i].officeNum, employeeList[i].phoneNum);
+    if (employeeList[i].name.toLowerCase().includes(inputString.toLowerCase())) {
+      resultList.push(employeeList[i]);
     }
   }
-} 
+  if (resultList.length > 0) {
+    renderEmployee(resultList);
+  } else {
+    render('Employee Not Found');
+  }
+}
+
 const update = function () {
-  // const userName = ;
-  // const userField = ;
-  // const userValue = ;
+  let resultList = [];
+  const userName = $('#inputName').val();
+  const officeNum = $('#officeNum').val();
+  const phoneNum = $('#phoneNum').val();
+  let employeeFound = false;
   for (let i = 0; i < employeeList.length; i++) {
-    if (userName === employeeList[i].name) {
-      if (userField === "officeNum") {
-        employeeList[i].officeNum = userValue;
-      }
-      else if (userField === "phoneNum") {
-        employeeList[i].phoneNum = userValue;
-      }
-      render(employeeList[i].name, employeeList[i].officeNum, employeeList[i].phoneNum);
+    if (userName.toLowerCase() === employeeList[i].name.toLowerCase()) {
+
+      employeeList[i].officeNum = officeNum;
+      employeeList[i].phoneNum = phoneNum;
+
+      resultList.push(employeeList[i]);
+      employeeFound = true;
+      break;
     }
   }
+  if (employeeFound) {
+    renderEmployee(resultList);
+  }
+  else {
+    render('Employee Not Found');
+  }
+}
 
-} 
 const add = function () {
-    // const userName = ;
-    // const userField = ;
-    // const userValue = ;
-    const newUser = {name:userName, officeNum:userField, phoneNum:userValue};
-    employeeList.push(newUser);
-
-    for (let i = 0; i < employeeList.length; i++) {
-      render(employeeList[i].name, employeeList[i].officeNum, employeeList[i].phoneNum);
-    }
-} 
+  const userName = $('#inputName').val();
+  const officeNum = $('#officeNum').val();
+  const phoneNum = $('#phoneNum').val();
+  const newUser = { name: userName, officeNum: officeNum, phoneNum: phoneNum };
+  employeeList.push(newUser);
+  renderEmployee([newUser]);
+}
 
 const cmdDelete = function () {
-    // const userName = prompt('Please enter your name:');
-    for (let i = 0; i < employeeList.length; i++) {
-      if(employeeList[i].name === userName){
-        employeeList.splice(i, 1);
-        break;
-      }       
+  const userName = $('#inputName').val();
+  let msg = 'Employee Not Found';
+  for (let i = 0; i < employeeList.length; i++) {
+    if (employeeList[i].name.toLowerCase() === userName.toLowerCase()) {
+      employeeList.splice(i, 1);
+      msg = 'Employee Deleted';
+      break;
     }
-    for (let i = 0; i < employeeList.length; i++) {
-      render(employeeList[i].name, employeeList[i].officeNum, employeeList[i].phoneNum);
-    }
+  }
+  render(msg);
 }
 
 const menu = function () {
-  $('.mainSection').hide();
+  $('.mainSection').addClass('hide');
   $('#resultBoard').empty();
+  $('#inputName').val('');
+  $('#officeNum').val('');
+  $('#phoneNum').val('');
 
   switch (this.id) {
-    case 'print':       
-        print(); //to display the result when a user click on 'print' on navigation
-        break;
+    case 'print':
+      print(); //to display the result when a user click on 'print' on navigation
+      break;
     case 'verify':
-        $('#contentVerify').show();
-        break;
+      $('#contentVerify').removeClass('hide');
+      $('#empName').removeClass('hide');
+      break;
     case 'lookup':
-        $('#contentLookup').show();
-        break;
+      $('#contentLookup').removeClass('hide');
+      $('#empName').removeClass('hide');
+      break;
     case 'contains':
-        $('#contentContains').show();
-        break;
+      $('#contentContains').removeClass('hide');
+      $('#empName').removeClass('hide');
+      break;
     case 'update':
-        $('#contentUpdate').show();
-        break;
+      $('#contentUpdate').removeClass('hide');
+      $('#empName').removeClass('hide');
+      $('#empAddUpdate').removeClass('hide');
+      break;
     case 'add':
-        $('#contentAdd').show();
-        break;
-        $('#contentDelete').show();
-        break;
+      $('#contentAdd').removeClass('hide');
+      $('#empName').removeClass('hide');
+      $('#empAddUpdate').removeClass('hide');
+      break;
+    case 'delete':
+      $('#contentDelete').removeClass('hide');
+      $('#empName').removeClass('hide');
+      break;
   }
 }
-
-
 
 $('#print').on('click', menu);
 $('#verify').on('click', menu);
@@ -189,6 +205,5 @@ $('#btnUpdate').on('click', update);
 $('#btnAdd').on('click', add);
 $('#btnDelete').on('click', cmdDelete);
 
-$('.mainSection').hide();
 
 
